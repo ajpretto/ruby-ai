@@ -1,26 +1,237 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Core palette */
+  --obsidian: #0A0A0B;
+  --obsidian-light: #111113;
+  --obsidian-lighter: #1A1A1D;
+  --ruby: #C41E3A;
+  --ruby-glow: #E63950;
+  --ruby-dark: #8B1428;
+  --cream: #F5F5F0;
+  --cream-muted: #A3A39E;
+  --gold: #C9A962;
+  --gold-muted: #8B7355;
+
+  /* Semantic */
+  --background: var(--obsidian);
+  --foreground: var(--cream);
+  --muted: var(--cream-muted);
+  --accent: var(--ruby);
+  --accent-glow: var(--ruby-glow);
+
+  /* Typography */
+  --font-serif: var(--font-crimson), Georgia, serif;
+  --font-mono: var(--font-mono), "IBM Plex Mono", monospace;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-glow: var(--accent-glow);
+  --color-obsidian: var(--obsidian);
+  --color-obsidian-light: var(--obsidian-light);
+  --color-obsidian-lighter: var(--obsidian-lighter);
+  --color-ruby: var(--ruby);
+  --color-ruby-glow: var(--ruby-glow);
+  --color-ruby-dark: var(--ruby-dark);
+  --color-cream: var(--cream);
+  --color-cream-muted: var(--cream-muted);
+  --color-gold: var(--gold);
+  --color-gold-muted: var(--gold-muted);
+  --font-serif: var(--font-serif);
+  --font-mono: var(--font-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-serif);
+  overflow-x: hidden;
+}
+
+/* Selection */
+::selection {
+  background: var(--ruby);
+  color: var(--cream);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--obsidian);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--obsidian-lighter);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ruby-dark);
+}
+
+/* Custom animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(1deg);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.4;
+    filter: blur(40px);
+  }
+  50% {
+    opacity: 0.7;
+    filter: blur(60px);
+  }
+}
+
+@keyframes grid-flow {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(40px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes data-pulse {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Utility classes */
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 4s ease-in-out infinite;
+}
+
+.animate-grid-flow {
+  animation: grid-flow 20s linear infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--ruby-dark) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+.animate-data-pulse {
+  animation: data-pulse 2s ease-in-out infinite;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.8s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 1s ease-out forwards;
+}
+
+/* Text gradient */
+.text-gradient-ruby {
+  background: linear-gradient(135deg, var(--ruby-glow) 0%, var(--ruby) 50%, var(--ruby-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glow effects */
+.glow-ruby {
+  box-shadow: 0 0 40px var(--ruby-dark), 0 0 80px rgba(196, 30, 58, 0.3);
+}
+
+.glow-ruby-subtle {
+  box-shadow: 0 0 20px rgba(196, 30, 58, 0.2);
+}
+
+/* Grid pattern background */
+.bg-grid-pattern {
+  background-image:
+    linear-gradient(var(--obsidian-lighter) 1px, transparent 1px),
+    linear-gradient(90deg, var(--obsidian-lighter) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Noise texture overlay */
+.noise-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Focus styles */
+input:focus,
+button:focus {
+  outline: 2px solid var(--ruby);
+  outline-offset: 2px;
+}
+
+/* Smooth transitions */
+.transition-all-smooth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
